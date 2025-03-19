@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './index.css';
 import GameBoard from './components/GameBoard.jsx';
 import { WINNING_COMBINATIONS } from './winning-combinations.js';
+import { main } from 'framer-motion/client';
 
 
 /*
@@ -28,9 +29,27 @@ const INITIAL_GAME_BOARD = [
 function App() {
   
 
-  return (
-    <h1>Coming soon React Tic-Tac-Toe</h1>
-  )
+  return <main>
+    <div id="game-container">
+      <ol>
+        <li>
+          <span id="player-name">Player 1</span>
+        </li>
+        <li>
+          <span id="player-symbol">X</span>
+        </li>
+
+        <li>
+          <span id="player-name">Player 2</span>
+        </li>
+        <li>
+          <span id="player-symbol">O</span>
+        </li>
+
+      </ol>
+      Game BOARD
+    </div>
+  </main>
 }
 
 export default App
