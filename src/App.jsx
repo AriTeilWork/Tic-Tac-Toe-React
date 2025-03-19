@@ -9,19 +9,16 @@ import { WINNING_COMBINATIONS } from './winning-combinations.js';
 import { main } from 'framer-motion/client';
 
 
-/*
 const PLAYERS = {
   X: 'Player 1',
   O: 'Player 2'
 };
-*/ //for future use
 
 const INITIAL_GAME_BOARD = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
-
 
 
 function App() {
