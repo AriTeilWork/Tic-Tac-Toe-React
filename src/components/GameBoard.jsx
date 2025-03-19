@@ -1,23 +1,22 @@
-import React from 'react';
-
-function GameBoard({ gameBoard = [], onSelectSquare }) {
+export default function GameBoard({ onSelectSquare, gameBoard }) {
   return (
-    <div className="game-board">
+    <ol id="game-board">
       {gameBoard.map((row, rowIndex) => (
-        <div key={rowIndex} className="board-row">
-          {row.map((cell, colIndex) => (
-            <button
-              key={colIndex}
-              className="board-cell"
-              onClick={() => onSelectSquare(rowIndex, colIndex)}
-            >
-              {cell}
-            </button>
-          ))}
-        </div>
+        <li key={rowIndex}>
+          <ol>
+            {row.map((playerSymbol, colIndex) => (
+              <li key={colIndex}>
+                <button
+                  onClick={() => onSelectSquare(rowIndex, colIndex)}
+                  disabled={playerSymbol !== null}
+                >
+                  {playerSymbol}
+                </button>
+              </li>
+            ))}
+          </ol>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
-
-export default GameBoard;

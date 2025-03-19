@@ -1,11 +1,12 @@
-export default function Log({ turns }) {
-    return (
-      <ol id="log">
-        {turns.map((turn) => (
-          <li key={`${turn.square.row}${turn.square.col}`}>
-            {turn.player} selected {turn.square.row},{turn.square.col}
-          </li>
-        ))}
-      </ol>
-    );
-  }
+export default function GameOver({ winner, onRestart }) {
+  return (
+    <div id="game-over">
+      <h2>Game Over!</h2>
+      {winner && <p>{winner} won!</p>}
+      {!winner && <p>It&apos;s a draw!</p>}
+      <p>
+        <button onClick={onRestart}>Rematch!</button>
+      </p>
+    </div>
+  );
+}

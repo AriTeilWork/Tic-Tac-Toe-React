@@ -27,6 +27,7 @@ export default function Player({
     editablePlayerName = (
       <input type="text" required value={playerName} onChange={handleChange} />
     );
+
   }
 
   return (
