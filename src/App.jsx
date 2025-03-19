@@ -1,7 +1,10 @@
-
 import { useState } from 'react';
-import './index.css';
+import { useEffect } from 'react';
+
+import Player from './components/Player.jsx';
 import GameBoard from './components/GameBoard.jsx';
+import Log from './components/Log.jsx';
+import './index.css';
 import { WINNING_COMBINATIONS } from './winning-combinations.js';
 import { main } from 'framer-motion/client';
 
@@ -13,12 +16,6 @@ const PLAYERS = {
 };
 */ //for future use
 
-/**
- * Represents the initial state of the Tic-Tac-Toe game board.
- * It is a 3x3 grid where each cell is initialized to `null`.
- * 
- * @constant {Array<Array<null>>} INITIAL_GAME_BOARD
- */
 const INITIAL_GAME_BOARD = [
   [null, null, null],
   [null, null, null],
@@ -26,30 +23,58 @@ const INITIAL_GAME_BOARD = [
 ];
 
 
+
 function App() {
-  
+  const [gameTurns, setGameTurns] = useState([]);
+  const [activePlayer, setActivePlayer] = useState('X');
+  const [gameBoard, setGameBoard] = useState(INITIAL_GAME_BOARD);
 
-  return <main>
-    <div id="game-container">
-      <ol>
-        <li>
-          <span id="player-name">Player 1</span>
-        </li>
-        <li>
-          <span id="player-symbol">X</span>
-        </li>
+  function handleSelectSquare(rowIndex, colIndex) {
+    if (gameBoard[rowIndex][colIndex] !== null) {
+      return; // Prevent overwriting an already selected square
+    }
 
-        <li>
-          <span id="player-name">Player 2</span>
-        </li>
-        <li>
-          <span id="player-symbol">O</span>
-        </li>
+    setGameBoard((prevBoard) => {
+      const updatedBoard = prevBoard.map((row, rIdx) =>
+        row.map((cell, cIdx) =>
+          rIdx === rowIndex && cIdx === colIndex ? activePlayer : cell
+        )
+      );
+      return updatedBoard;
+    });
 
-      </ol>
-      Game BOARD
-    </div>
-  </main>
+    setGameTurns((prevTurns) => [
+      { square: { row: rowIndex, col: colIndex }, player: activePlayer },
+      ...prevTurns,
+    ]);
+
+    setActivePlayer((curActivePlayer) => (curActivePlayer === 'X' ? 'O' : 'X'));
+  }
+
+  return (
+    <main>
+      <div id="game-container">
+        <ol id="players" className="highlight-player">
+          <Player
+            initialName="Player 1"
+            symbol="X"
+            isActive={activePlayer === 'X'}
+          />
+          <Player
+            initialName="Player 2"
+            symbol="O"
+            isActive={activePlayer === 'O'}
+          />
+        </ol>
+        <GameBoard
+          onSelectSquare={handleSelectSquare}
+          activePlayerSymbol={activePlayer}
+          gameBoard={gameBoard}
+        />
+      </div>
+      <Log gameTurns={gameTurns} />
+    </main>
+  );
 }
 
-export default App
+export default App;
