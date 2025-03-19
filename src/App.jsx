@@ -73,10 +73,6 @@ function App() {
   const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectSquare(rowIndex, colIndex) {
-    if (gameBoard[rowIndex][colIndex] !== null || winner || hasDraw) {
-      return; // Prevent selecting an occupied square or playing after game over
-    }
-
     setGameTurns((prevTurns) => {
       const currentPlayer = deriveActivePlayer(prevTurns);
 
@@ -122,7 +118,7 @@ function App() {
         {(winner || hasDraw) && (
           <GameOver winner={winner} onRestart={handleRestart} />
         )}
-        <GameBoard onSelectSquare={handleSelectSquare} gameBoard={gameBoard} />
+        <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <Log turns={gameTurns} />
     </main>
